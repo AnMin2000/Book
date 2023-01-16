@@ -14,7 +14,7 @@ public class SignUp {
 
     public SignUp(){
         JFrame c = new JFrame();
-        c.setSize(500,500);
+        c.setSize(200,150);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.add(panel1);
         c.setVisible(true);
