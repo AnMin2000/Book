@@ -4,29 +4,38 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ex1 {
+public class SignUp {
     private JButton button1;
     private JPanel panel1;
-    private JTextField textField1;
+    private JTextField NameTextField1;
+    private JTextField NumberTextField;
+    private JLabel name;
+    private JLabel number;
 
-    public ex1(){
+    public SignUp(){
         JFrame c = new JFrame();
         c.setSize(500,500);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        c.add(panel1);
+        c.setVisible(true);
         button1.addActionListener(new ActionListener() {
+            String name, number;
             @Override
             public void actionPerformed(ActionEvent e) {
-                c.dispose();
-                new ex2();
+               c.dispose();
+               name = NameTextField1.getText();
+               number = NumberTextField.getText();
+
+               new MainUi(name,number);
+
             }
         });
-        c.add(panel1);
 
-        c.setVisible(true);
+
+
     }
 
     public static void main(String args[]){
-        new ex1();
+        new SignUp();
     }
 }
