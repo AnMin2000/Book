@@ -33,16 +33,22 @@ public class MainUi {
 
             AppendButton.addActionListener(new ActionListener() {
                 String name, number, AllList;
+                int i = 0;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
                     name = textField1.getText();
                     number = textField2.getText();
-
-                    AllList = List.getText();
-                    List.setText(AllList +'\n'+ name + number);
-
+                    AllList = name + number + "\n";
+                    if(i == 0) {
+                        List.setText(name + number);
+                        i++;
+                    }
+                    else {
+                        AllList = List.getText(); // 안민 1
+                        List.setText(AllList + name + number); // 안민 1
+                    }
                 }
             });
 
