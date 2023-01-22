@@ -11,13 +11,14 @@ public class MainUi {
     private JPanel Append;
     private JPanel Look;
     private JLabel NameLabel;
-    private JTextField textField1;
+    private JTextField NameField;
     private JLabel Number_Label;
-    private JTextField textField2;
+    private JTextField NumberField;
     private JButton AppendButton;
-    private JButton SortButton;
     private JButton ListButton;
-    private JLabel List;
+    private JButton SortButton;
+    private JPanel ListPanel;
+    private JList AddrerssList;
 
 
     public MainUi(String name, String number){
@@ -31,30 +32,31 @@ public class MainUi {
         tmp = Title.getText();
         Title.setText(name + tmp);
 
+        DefaultListModel model = new DefaultListModel();
+        AddrerssList.setModel(model);
+
             AppendButton.addActionListener(new ActionListener() {
-                String name, number, AllList;
+
+                String name, number;
                 int i = 0;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                    name = textField1.getText();
-                    number = textField2.getText();
-                    AllList = name + number + "\n";
-                    if(i == 0) {
-                        List.setText(name + number);
-                        i++;
-                    }
-                    else {
-                        AllList = List.getText(); // 안민 1
-                        List.setText(AllList + name + number); // 안민 1
-                    }
+                    name = NameField.getText();   // 안민
+                    number = NumberField.getText(); // 1번
+                    model.addElement(name);
+                    AddrerssList.setModel(model);
                 }
             });
+
 
             c.add(panel1);
 
             c.setVisible(true);
+    }
 
+    public static void main(String args[]){
+        new MainUi("1","1");
     }
 }
