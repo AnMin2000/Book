@@ -3,6 +3,7 @@ package Book;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 public class MainUi {
 
@@ -33,7 +34,7 @@ public class MainUi {
         Title.setText(name + tmp);
 
         DefaultListModel model = new DefaultListModel();
-        AddrerssList.setModel(model);
+      //  AddrerssList.setModel(model);
 
             AppendButton.addActionListener(new ActionListener() {
 
@@ -45,11 +46,30 @@ public class MainUi {
 
                     name = NameField.getText();   // 안민
                     number = NumberField.getText(); // 1번
-                    model.addElement(name);
+                    model.addElement(name + " " + number);
                     AddrerssList.setModel(model);
                 }
             });
 
+            SortButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    DefaultListModel sortedModel = new DefaultListModel();
+                    Object[] objectArray = model.toArray();
+                    String[] sortName = new String[objectArray.length];
+
+                    for(int i = 0; i< objectArray.length; i++){
+                        sortName[i] = (String) objectArray[i];
+                    }
+
+                    Arrays.sort(sortName);
+
+                    for(String element : sortName){
+                        sortedModel.addElement(element);
+                    }
+                    AddrerssList.setModel(sortedModel);
+                }
+            });
 
             c.add(panel1);
 
