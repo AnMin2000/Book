@@ -39,7 +39,6 @@ public class MainUi {
             AppendButton.addActionListener(new ActionListener() {
 
                 String name, number;
-                int i = 0;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -54,20 +53,12 @@ public class MainUi {
             SortButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    DefaultListModel sortedModel = new DefaultListModel();
-                    Object[] objectArray = model.toArray();
-                    String[] sortName = new String[objectArray.length];
 
-                    for(int i = 0; i< objectArray.length; i++){
-                        sortName[i] = (String) objectArray[i];
-                    }
 
-                    Arrays.sort(sortName);
 
-                    for(String element : sortName){
-                        sortedModel.addElement(element);
-                    }
-                    AddrerssList.setModel(sortedModel);
+
+
+
                 }
             });
 
