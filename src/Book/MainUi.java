@@ -3,7 +3,12 @@ package Book;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+//import java.lang.foreign.Addressable;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Spliterator;
+import java.util.stream.Collectors;
 
 public class MainUi {
 
@@ -20,6 +25,8 @@ public class MainUi {
     private JButton SortButton;
     private JPanel ListPanel;
     private JList AddrerssList;
+    private JButton SearchButton;
+    private JTextField SearchTextField;
 
 
     public MainUi(String name, String number){
@@ -34,7 +41,6 @@ public class MainUi {
         Title.setText(name + tmp);
 
         DefaultListModel model = new DefaultListModel();
-      //  AddrerssList.setModel(model);
 
             AppendButton.addActionListener(new ActionListener() {
 
@@ -54,14 +60,40 @@ public class MainUi {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
+                    DefaultListModel SortedModel = new DefaultListModel();
+                    Object[] objectArray = model.toArray();
 
+                    Arrays.sort(objectArray);
 
-
-
-
-                }
+                    for(Object element : objectArray){
+                        SortedModel.addElement(element);
+                    }
+                    AddrerssList.setModel(SortedModel);
+                    }
             });
 
+        SearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DefaultListModel SearchModel = new DefaultListModel();
+                Object []ListArray = model.toArray(); // ListArray[i]도 한줄이 쫙나옴
+                String SearchName = SearchTextField.getText(); // SearchName은 이름만 나옴
+                String []tmp = new String[ListArray.length]; // tmp[i]를 치면 한줄이 쫙나옴
+                // 이름 + 전화번호를 저장할 때 이름만 저장하는 변수를 하나 만든후 같은 인덱스를 전역변수로 두어 비교
+                for(int i = 0; i< ListArray.length;i++)
+                    tmp[i] = (String) ListArray[i];
+
+                String tmp2 = Arrays.toString(tmp);
+                String []list = tmp2.split("\\[|\\,|\\s|\\]");
+
+                int i = 0;
+                for(i =0; i<list.length; i++) {
+                    if (SearchName.equals(list[i])) break;
+                }
+                SearchModel.addElement(list[i] + " " + list[i+1]);
+                AddrerssList.setModel(SearchModel);
+            }
+        });
             c.add(panel1);
 
             c.setVisible(true);
