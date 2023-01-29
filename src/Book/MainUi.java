@@ -83,14 +83,12 @@ public class MainUi {
                 for(int i = 0; i< ListArray.length;i++)
                     tmp[i] = (String) ListArray[i];
 
-                String tmp2 = Arrays.toString(tmp);
-                String []list = tmp2.split("\\[|\\,|\\s|\\]");
-
-                int i = 0;
-                for(i =0; i<list.length; i++) {
-                    if (SearchName.equals(list[i])) break;
+                for(int i =0; i<tmp.length; i++) {
+                    if (tmp[i].indexOf(SearchName) != -1){
+                        SearchModel.addElement(tmp[i]);
+                    }
                 }
-                SearchModel.addElement(list[i] + " " + list[i+1]);
+
                 AddrerssList.setModel(SearchModel);
             }
         });
