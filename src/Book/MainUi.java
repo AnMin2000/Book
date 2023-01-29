@@ -76,23 +76,30 @@ public class MainUi {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DefaultListModel SearchModel = new DefaultListModel();
-                Object []ListArray = model.toArray(); // ListArray[i]도 한줄이 쫙나옴
-                String SearchName = SearchTextField.getText(); // SearchName은 이름만 나옴
-                String []tmp = new String[ListArray.length]; // tmp[i]를 치면 한줄이 쫙나옴
-                // 이름 + 전화번호를 저장할 때 이름만 저장하는 변수를 하나 만든후 같은 인덱스를 전역변수로 두어 비교
+                Object []ListArray = model.toArray();
+                String SearchName = SearchTextField.getText();
+                String []tmp = new String[ListArray.length];
                 for(int i = 0; i< ListArray.length;i++)
                     tmp[i] = (String) ListArray[i];
+
 
                 for(int i =0; i<tmp.length; i++) {
                     if (tmp[i].indexOf(SearchName) != -1){
                         SearchModel.addElement(tmp[i]);
                     }
                 }
-
+               // AddrerssList.setModel(model);
                 AddrerssList.setModel(SearchModel);
             }
         });
-            c.add(panel1);
+        ListButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                AddrerssList.setModel(model);
+            }
+        });
+                c.add(panel1);
 
             c.setVisible(true);
     }
