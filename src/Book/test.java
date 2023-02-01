@@ -1,16 +1,26 @@
 package Book;
-
+import java.sql.*;
 import javax.swing.*;
 
 public class test {
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException {
+        String url = "jdbc:mysql://localhost:3306/jdbc";
+        String userName = "root";
+        String password = "비밀번호";
 
-        String tmp = "[1 2,3 4]";
-        String []tmp2 = tmp.split("\\[|\\,|\\s|\\]");
+        Connection connection = DriverManager.getConnection(url, userName, password);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("select * from users");
 
-     //   System.out.print(tmp2[0].length());
-        System.out.print(tmp2[3]);
+        resultSet.next();
+        String name = resultSet.getString("name");
+        System.out.println(name);
+
+        resultSet.close();
+        statement.close();
+        connection.close();
     }
+
 }

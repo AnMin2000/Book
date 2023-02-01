@@ -27,7 +27,10 @@ public class MainUi {
     private JList AddrerssList;
     private JButton SearchButton;
     private JTextField SearchTextField;
+    private JTextField textField1;
+    private JLabel DefaultLabel;
 
+    String etc;
 
     public MainUi(String name, String number){
         String tmp;
@@ -48,9 +51,10 @@ public class MainUi {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
                     name = NameField.getText();   // 안민
                     number = NumberField.getText(); // 1번
+                    etc = NumberField.getText();
+
                     model.addElement(name + " " + number);
                     AddrerssList.setModel(model);
                 }
@@ -99,6 +103,7 @@ public class MainUi {
                 AddrerssList.setModel(model);
             }
         });
+
                 c.add(panel1);
 
             c.setVisible(true);
