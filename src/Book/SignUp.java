@@ -14,7 +14,9 @@ public class SignUp {
     private JLabel number;
     private JLabel ID;
     private JTextField IDTextField;
-    private JButton Login;
+    private JButton Overlap;
+    private JLabel PassWord;
+    private JTextField PassWordTextField;
 
     public SignUp(){
         JFrame c = new JFrame();
@@ -23,34 +25,30 @@ public class SignUp {
         c.add(panel1);
         c.setVisible(true);
         button1.addActionListener(new ActionListener() {
-            String name, number, ID;
+            String ID, PassWd, name, number;
             @Override
             public void actionPerformed(ActionEvent e) {
                c.dispose();
                 try {
                     DB connect = new DB();
+                    ID = NumberTextField.getText();
+                    PassWd = PassWordTextField.getText();
                     name = NameTextField1.getText();
                     number = NumberTextField.getText();
-                    ID = NumberTextField.getText();
 
-                    connect.pstmt.setString(1, ID);
-                    connect.pstmt.setString(2, name);
-                    connect.pstmt.setString(3, number);
+                    String[] PrArr = new String[]{ID,PassWd,name,number};
 
-                    connect.pstmt.executeUpdate();
+                    connect.insert("users", 4, PrArr);
+
+
                     new MainUi(name,number);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-
-
             }
         });
     }
-
     public static void main(String args[]){
         new SignUp();
     }
-
-
 }
