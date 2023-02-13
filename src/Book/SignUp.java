@@ -18,6 +18,8 @@ public class SignUp {
     private JLabel PassWord;
     private JTextField PassWordTextField;
 
+    public int check;
+
     public SignUp(){
         JFrame c = new JFrame();
         c.setSize(300,230);
@@ -31,7 +33,7 @@ public class SignUp {
                c.dispose();
                 try {
                     DB connect = new DB();
-                    ID = NumberTextField.getText();
+                    ID = IDTextField.getText();
                     PassWd = PassWordTextField.getText();
                     name = NameTextField1.getText();
                     number = NumberTextField.getText();
@@ -45,6 +47,13 @@ public class SignUp {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+        Overlap.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(check == -1) new Failed(); // 이거 다시해야 됨 안 먹힘 *textfield에 넣자마다 중복 확인을 누르면 되는지 체크*
+
             }
         });
     }
