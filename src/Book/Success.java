@@ -4,14 +4,14 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Failed {
+public class Success {
     private JPanel panel1;
-    private JLabel text;
     private JButton button1;
+    private JLabel JLabel1;
 
-    public Failed() {
+    public Success() {
         JFrame c = new JFrame();
-        c.setSize(100, 100);
+        c.setSize(170, 100);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.add(panel1);
         c.setVisible(true);
@@ -24,6 +24,6 @@ public class Failed {
         });
     }
     public static void main(String []args){
-        new Failed();
+        new Success();
     }
 }

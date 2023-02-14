@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class SignUp {
-    private JButton button1;
+    private JButton SignUpButton;
     private JPanel panel1;
     private JTextField NameTextField1;
     private JTextField NumberTextField;
@@ -22,40 +22,54 @@ public class SignUp {
 
     public SignUp(){
         JFrame c = new JFrame();
-        c.setSize(300,230);
+        c.setSize(400,230);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.add(panel1);
         c.setVisible(true);
-        button1.addActionListener(new ActionListener() {
+        Overlap.addActionListener(new ActionListener() {
             String ID, PassWd, name, number;
             @Override
             public void actionPerformed(ActionEvent e) {
-               c.dispose();
                 try {
                     DB connect = new DB();
                     ID = IDTextField.getText();
-                    PassWd = PassWordTextField.getText();
-                    name = NameTextField1.getText();
-                    number = NumberTextField.getText();
+                    connect.Overlap(ID);
 
-                    String[] PrArr = new String[]{ID,PassWd,name,number};
+                    SignUpButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            c.dispose();
+                            try {
+                                c.dispose();
+                                DB connect = new DB();
+                                ID = IDTextField.getText();
+                                PassWd = PassWordTextField.getText();
+                                name = NameTextField1.getText();
+                                number = NumberTextField.getText();
 
-                    connect.insert("users", 4, PrArr);
+                                String[] PrArr = new String[]{ID,PassWd,name,number};
 
+                                connect.insert("users", 4, PrArr);
 
-                    new MainUi(name,number);
+                                c.dispose();
+                                new MainUi(name,number);
+                                c.dispose();
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                           // if(check == -1) new Failed(); // 이거 다시해야 됨 안 먹힘 *textfield에 넣자마다 중복 확인을 누르면 되는지 체크*
+
+                           // new MainUi(name,number);
+                            c.dispose();
+                        }
+                    });
+
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
-        Overlap.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(check == -1) new Failed(); // 이거 다시해야 됨 안 먹힘 *textfield에 넣자마다 중복 확인을 누르면 되는지 체크*
 
-            }
-        });
     }
     public static void main(String args[]){
         new SignUp();
