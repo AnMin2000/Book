@@ -33,34 +33,28 @@ public class SignUp {
                 try {
                     DB connect = new DB();
                     ID = IDTextField.getText();
-                    connect.Overlap(ID);
+                    check = connect.Overlap(ID);
+                    if(check == 1) return;
 
                     SignUpButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            c.dispose();
+                            ID = IDTextField.getText();
+                            PassWd = PassWordTextField.getText();
+                            name = NameTextField1.getText();
+                            number = NumberTextField.getText();
+
+                            String[] PrArr = new String[]{ID,PassWd,name,number};
+
                             try {
-                                c.dispose();
-                                DB connect = new DB();
-                                ID = IDTextField.getText();
-                                PassWd = PassWordTextField.getText();
-                                name = NameTextField1.getText();
-                                number = NumberTextField.getText();
-
-                                String[] PrArr = new String[]{ID,PassWd,name,number};
-
                                 connect.insert("users", 4, PrArr);
-
-                                c.dispose();
-                                new MainUi(name,number);
-                                c.dispose();
                             } catch (SQLException ex) {
                                 throw new RuntimeException(ex);
                             }
-                           // if(check == -1) new Failed(); // 이거 다시해야 됨 안 먹힘 *textfield에 넣자마다 중복 확인을 누르면 되는지 체크*
 
-                           // new MainUi(name,number);
+
                             c.dispose();
+                            new MainUi(name,number);
                         }
                     });
 

@@ -8,6 +8,6 @@ public class Etc {
     private JTextField textField1;
     private JTextField textField2;
     private JTextField textField3;
-    private JButton button1;
+    private JButton 수정Button;
     private JList list1;
 }

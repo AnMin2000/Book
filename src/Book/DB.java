@@ -41,7 +41,7 @@ public class DB {
 
     }
 
-    public void Overlap(String ID) throws SQLException {
+    public int Overlap(String ID) throws SQLException {
         stmt = conn.createStatement();
 
 
@@ -50,12 +50,12 @@ public class DB {
             int j = 1;
             if (rs.getString(j).indexOf(ID) != -1) {
                 new Failed();
-                return;
+                return 1;
                 // "중복 된 ID입니다" 라고 표현할 수 있는 GUI 생성
             }
             if (StringUtils.isNullOrEmpty(rs.getString(j))) j++;
         }
         new Success();
-        return;
+        return 0;
     }
 }
