@@ -23,7 +23,7 @@ public class DB {
         String sql, sql2;
         String ValuesVar = "?";
 
-        SignUp Check = new SignUp();
+        //SignUp Check = new SignUp();
 
         for (int i = 0; i < number - 1; i++) ValuesVar += ", ?";
 
@@ -43,11 +43,10 @@ public class DB {
 
     public int Overlap(String ID) throws SQLException {
         stmt = conn.createStatement();
-
-
         ResultSet rs = stmt.executeQuery("select id from users");
+        int j = 1;
+
         while (rs.next()) {
-            int j = 1;
             if (rs.getString(j).indexOf(ID) != -1) {
                 new Failed();
                 return 1;
@@ -56,6 +55,6 @@ public class DB {
             if (StringUtils.isNullOrEmpty(rs.getString(j))) j++;
         }
         new Success();
-        return 0;
+        return 2;
     }
 }

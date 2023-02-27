@@ -17,6 +17,7 @@ public class SignUp {
     private JButton Overlap;
     private JLabel PassWord;
     private JTextField PassWordTextField;
+    String UserID, UserPassWd, Username, Usernumber;
 
     public int check;
 
@@ -29,13 +30,14 @@ public class SignUp {
         c.setVisible(true);
         
         Overlap.addActionListener(new ActionListener() {
-            String ID, PassWd, name, number;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     DB connect = new DB();
-                    ID = IDTextField.getText();
-                    check = connect.Overlap(ID);
+                    UserID = IDTextField.getText();
+                    check = connect.Overlap(UserID);
+
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -46,27 +48,28 @@ public class SignUp {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(check == 1) return;
-                
-                ID = IDTextField.getText();
-                PassWd = PassWordTextField.getText();
-                name = NameTextField1.getText();
-                number = NumberTextField.getText();
 
-                String[] PrArr = new String[]{ID,PassWd,name,number};
+                UserID = IDTextField.getText();
+                UserPassWd = PassWordTextField.getText();
+                Username = NameTextField1.getText();
+                Usernumber = NumberTextField.getText();
+
+                String[] PrArr = new String[]{UserID,UserPassWd,Username,Usernumber};
 
                 try {
+                    DB connect = new DB();
                     connect.insert("users", 4, PrArr);
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
                 
-                new MainUi(name,number);
+                new MainUi(Username,Usernumber);
                 c.dispose();
             }
         });
 
     }
     public static void main(String args[]){
-        new SignUp();
+         SignUp S = new SignUp();
     }
 }
