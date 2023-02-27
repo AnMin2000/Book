@@ -22,10 +22,12 @@ public class SignUp {
 
     public SignUp(){
         JFrame c = new JFrame();
+        
         c.setSize(400,230);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.add(panel1);
         c.setVisible(true);
+        
         Overlap.addActionListener(new ActionListener() {
             String ID, PassWd, name, number;
             @Override
@@ -34,33 +36,32 @@ public class SignUp {
                     DB connect = new DB();
                     ID = IDTextField.getText();
                     check = connect.Overlap(ID);
-                    if(check == 1) return;
-
-                    SignUpButton.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            ID = IDTextField.getText();
-                            PassWd = PassWordTextField.getText();
-                            name = NameTextField1.getText();
-                            number = NumberTextField.getText();
-
-                            String[] PrArr = new String[]{ID,PassWd,name,number};
-
-                            try {
-                                connect.insert("users", 4, PrArr);
-                            } catch (SQLException ex) {
-                                throw new RuntimeException(ex);
-                            }
-
-
-                            c.dispose();
-                            new MainUi(name,number);
-                        }
-                    });
-
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
+            }
+        });
+        
+        SignUpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(check == 1) return;
+                
+                ID = IDTextField.getText();
+                PassWd = PassWordTextField.getText();
+                name = NameTextField1.getText();
+                number = NumberTextField.getText();
+
+                String[] PrArr = new String[]{ID,PassWd,name,number};
+
+                try {
+                    connect.insert("users", 4, PrArr);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+                
+                new MainUi(name,number);
+                c.dispose();
             }
         });
 
