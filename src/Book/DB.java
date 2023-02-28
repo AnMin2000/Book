@@ -2,6 +2,7 @@ package Book;
 
 import com.mysql.cj.util.StringUtils;
 
+import javax.swing.*;
 import java.sql.*;
 
 public class DB {
@@ -9,7 +10,7 @@ public class DB {
     Connection conn = null;
     Statement stmt;
 
-    public int check;
+
 
     public DB() throws SQLException {
 
@@ -20,16 +21,10 @@ public class DB {
     }
 
     public void insert(String name, int number, String[] PrName) throws SQLException {
-        String sql, sql2;
+        String sql;
         String ValuesVar = "?";
 
-        //SignUp Check = new SignUp();
-
         for (int i = 0; i < number - 1; i++) ValuesVar += ", ?";
-
-
-
-        //if(pstmt2.toString().indexOf(PrName[0])!= -1) System.out.println("good");
 
         sql = "INSERT INTO " + name + " VALUES (" + ValuesVar + ") ";
 
@@ -56,5 +51,20 @@ public class DB {
         }
         new Success();
         return 2;
+    }
+    public boolean Login(String Id, String Pw) throws SQLException {
+        stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("select id from users");
+        int j = 1;
+
+        while (rs.next()) {
+            if (rs.getString(j).indexOf(Id) != -1 && rs.getString(j).indexOf(Pw) != -1) {
+                JOptionPane.showMessageDialog(null, "로그인 실패");
+                return false;
+            }
+            if (StringUtils.isNullOrEmpty(rs.getString(j))) j++;
+        }
+        JOptionPane.showMessageDialog(null, "로그인 성공");
+        return true;
     }
 }

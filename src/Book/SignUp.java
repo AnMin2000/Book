@@ -28,6 +28,7 @@ public class SignUp {
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.add(panel1);
         c.setVisible(true);
+
         
         Overlap.addActionListener(new ActionListener() {
 
