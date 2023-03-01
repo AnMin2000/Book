@@ -1,5 +1,6 @@
 package Book;
 
+import com.mysql.cj.protocol.Resultset;
 import com.mysql.cj.util.StringUtils;
 
 import javax.swing.*;
@@ -54,17 +55,19 @@ public class DB {
     }
     public boolean Login(String Id, String Pw) throws SQLException {
         stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select id from users");
-        int j = 1;
+        ResultSet rs = stmt.executeQuery("select id, passwd from users");
+
+        int j = 1; //getStrig은 행 위치별로 출력을 하기 때문에 쿼리문은 첫번째가 1부터 시작하므로
 
         while (rs.next()) {
-            if (rs.getString(j).indexOf(Id) != -1 && rs.getString(j).indexOf(Pw) != -1) {
-                JOptionPane.showMessageDialog(null, "로그인 실패");
-                return false;
+            System.out.println(rs.getString(j)+ rs.getString(j+1));
+            if (rs.getString(j).indexOf(Id) != -1 && rs.getString(j + 1).indexOf(Pw) != -1) {
+                JOptionPane.showMessageDialog(null, "로그인 성공");
+                return true; // 중복은 같으면 안되니까 false고 로그인은 같아야 되니까 true다
             }
             if (StringUtils.isNullOrEmpty(rs.getString(j))) j++;
         }
-        JOptionPane.showMessageDialog(null, "로그인 성공");
-        return true;
+        JOptionPane.showMessageDialog(null, "로그인 실패");
+        return false;
     }
 }

@@ -22,7 +22,10 @@ public class MyServer {
             serverSocket = new ServerSocket(8000);
 
             System.out.println("[Server실행] Client.연결대기중...");
+            //new MyClient();
             socket = serverSocket.accept();			// 연결대기
+
+
 
             System.out.println("Client 연결됨.");
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

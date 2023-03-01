@@ -13,6 +13,7 @@ public class Success {
         JFrame c = new JFrame();
         c.setSize(170, 100);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        c.setLocation(550,180);
         c.add(panel1);
         c.setVisible(true);
         button1.addActionListener(new ActionListener() {

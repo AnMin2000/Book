@@ -26,6 +26,7 @@ public class SignUp {
         
         c.setSize(400,230);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        c.setLocation(550,180);
         c.add(panel1);
         c.setVisible(true);
 
@@ -64,7 +65,7 @@ public class SignUp {
                     throw new RuntimeException(ex);
                 }
                 
-                new MainUi(Username,Usernumber);
+               // new MainUi(Username,Usernumber);
                 c.dispose();
             }
         });

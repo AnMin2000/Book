@@ -17,6 +17,7 @@ public class LoginUi {
         JFrame c = new JFrame();
         c.setSize(400,230);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        c.setLocation(550,180);
         c.add(JPanel1);
         c.setVisible(true);
 
@@ -32,9 +33,14 @@ public class LoginUi {
                     //MyServer를 어디에 둬야할지 모르겟음 알아보는중
                     DB connect = new DB();
                     boolean state = connect.Login(UserId, UserPw);
-                    new MyServer();
-                    if(state == true)    new MyClient();
-                    else return;
+
+                    if(state == true){
+                        new MyClient();
+                        new MainUi("안민","123123");
+                    }
+                   else {
+                       return;
+                   }
 
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
