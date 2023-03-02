@@ -12,7 +12,6 @@ public class DB {
     Statement stmt;
 
 
-
     public DB() throws SQLException {
 
         String dbUrl = "jdbc:mysql://localhost:3306/jdbc";
@@ -32,7 +31,7 @@ public class DB {
         pstmt = conn.prepareStatement(sql);
         for (int i = 0; i < PrName.length; i++)
             pstmt.setString(i + 1, PrName[i]);
-
+        // 이건 왜 되는거야? 7열까지 들어가 있으면 8부터 시작을 해야 되는데
         pstmt.executeUpdate();
 
     }
@@ -53,21 +52,25 @@ public class DB {
         new Success();
         return 2;
     }
+
     public boolean Login(String Id, String Pw) throws SQLException {
-        stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select id, passwd from users");
 
-        int j = 1; //getStrig은 행 위치별로 출력을 하기 때문에 쿼리문은 첫번째가 1부터 시작하므로
-
-        while (rs.next()) {
-            System.out.println(rs.getString(j)+ rs.getString(j+1));
-            if (rs.getString(j).indexOf(Id) != -1 && rs.getString(j + 1).indexOf(Pw) != -1) {
+        String sql = "select * from users where id = ?";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, Id);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            System.out.println(rs.getString(2));
+            if (rs.getString(2).equals(Pw)) {
                 JOptionPane.showMessageDialog(null, "로그인 성공");
-                return true; // 중복은 같으면 안되니까 false고 로그인은 같아야 되니까 true다
+                return true;
             }
-            if (StringUtils.isNullOrEmpty(rs.getString(j))) j++;
         }
         JOptionPane.showMessageDialog(null, "로그인 실패");
         return false;
     }
 }
+
+
+      //  System.out.println(pstmt);
+       // return true;

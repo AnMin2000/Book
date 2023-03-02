@@ -36,6 +36,7 @@ public class LoginUi {
 
                     if(state == true){
                         new MyClient();
+                        c.dispose();
                         new MainUi("안민","123123");
                     }
                    else {
