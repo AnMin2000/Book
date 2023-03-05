@@ -19,7 +19,7 @@ public class SignUp {
     private JTextField PassWordTextField;
     String UserID, UserPassWd, Username, Usernumber;
 
-    public int check;
+    public boolean check;
 
     public SignUp(){
         JFrame c = new JFrame();
@@ -49,7 +49,7 @@ public class SignUp {
         SignUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(check == 1) return;
+                if(check == false) return;
 
                 UserID = IDTextField.getText();
                 UserPassWd = PassWordTextField.getText();

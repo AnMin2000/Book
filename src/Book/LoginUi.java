@@ -35,9 +35,10 @@ public class LoginUi {
                     boolean state = connect.Login(UserId, UserPw);
 
                     if(state == true){
-                        new MyClient();
+                        connect.sever();
                         c.dispose();
                         new MainUi("안민","123123");
+
                     }
                    else {
                        return;

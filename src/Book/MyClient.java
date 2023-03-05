@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MyClient {
@@ -16,35 +17,16 @@ public class MyClient {
 
             try {
                 socket = new Socket("127.0.0.1", 8000);
-
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(socket.getOutputStream());
+                DB connect = new DB();
 
                 System.out.print("연결완료");
-                // 이 부분도 고쳐야 됨
-                while (true) {
-                    System.out.print("전송하기>>> ");
-                    String outputMessage = scanner.nextLine();
-                    out.println(outputMessage);
-                    out.flush();
-                    if ("quit".equalsIgnoreCase(outputMessage)) break;
 
-                    String inputMessage = in.readLine();
-                    System.out.println("From Server: " + inputMessage);
-                    if ("quit".equalsIgnoreCase(inputMessage)) break;
-                }
             } catch (IOException e) {
                 System.out.println(e.getMessage());
-            } finally {
-                try {
-                    scanner.close();
-                    if (socket != null) socket.close();
-                    System.out.println("서버연결종료");
-                } catch (IOException e) {
-                    System.out.println("소켓통신에러");
-                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        }
+    }
     public static void main(String[] args) {
         new MyClient();
     }

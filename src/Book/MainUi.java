@@ -38,6 +38,7 @@ public class MainUi {
         JFrame c = new JFrame();
         c.setSize(500,500);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        c.setLocation(550,180);
 
         Title.setHorizontalAlignment(JLabel.CENTER);
         tmp = Title.getText();

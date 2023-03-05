@@ -1,10 +1,14 @@
 package Book;
 
-import com.mysql.cj.protocol.Resultset;
-import com.mysql.cj.util.StringUtils;
-
 import javax.swing.*;
 import java.sql.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Scanner;
 
 public class DB {
     public PreparedStatement pstmt;
@@ -18,6 +22,23 @@ public class DB {
         String dbID = "root";
         String dbPassword = "0000";
         conn = DriverManager.getConnection(dbUrl, dbID, dbPassword);
+        // 디비 코드
+    }
+    public void sever(){
+        try {
+            BufferedReader in = null;
+            PrintWriter out = null;
+
+            Socket socket = null;
+            Scanner scanner = new Scanner(System.in);
+
+            socket = new Socket("127.0.0.1", 8000);
+
+            System.out.print("연결완료");
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void insert(String name, int number, String[] PrName) throws SQLException {
@@ -36,21 +57,20 @@ public class DB {
 
     }
 
-    public int Overlap(String ID) throws SQLException {
-        stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select id from users");
-        int j = 1;
-
-        while (rs.next()) {
-            if (rs.getString(j).indexOf(ID) != -1) {
-                new Failed();
-                return 1;
-                // "중복 된 ID입니다" 라고 표현할 수 있는 GUI 생성
+    public boolean Overlap(String ID) throws SQLException {
+        String sql = "select * from users where id = ?";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, ID);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            System.out.println(rs.getString(2));
+            if (rs.getString(1).equals(ID)) {
+                JOptionPane.showMessageDialog(null, "아이디 중복");
+                return false;
             }
-            if (StringUtils.isNullOrEmpty(rs.getString(j))) j++;
         }
-        new Success();
-        return 2;
+        JOptionPane.showMessageDialog(null, "사용 가능 아이디");
+        return true;
     }
 
     public boolean Login(String Id, String Pw) throws SQLException {
@@ -60,7 +80,7 @@ public class DB {
         pstmt.setString(1, Id);
         ResultSet rs = pstmt.executeQuery();
         if (rs.next()) {
-            System.out.println(rs.getString(2));
+            //System.out.println(rs.getString(2));
             if (rs.getString(2).equals(Pw)) {
                 JOptionPane.showMessageDialog(null, "로그인 성공");
                 return true;
