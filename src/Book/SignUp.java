@@ -21,9 +21,10 @@ public class SignUp {
 
     public boolean check;
 
-    public SignUp(){
+    public SignUp() throws SQLException {
+        DB connect = new DB();
+        connect.sever();
         JFrame c = new JFrame();
-        
         c.setSize(400,230);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         c.setLocation(550,180);
@@ -32,14 +33,11 @@ public class SignUp {
 
         
         Overlap.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    DB connect = new DB();
                     UserID = IDTextField.getText();
                     check = connect.Overlap(UserID);
-
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -58,20 +56,23 @@ public class SignUp {
 
                 String[] PrArr = new String[]{UserID,UserPassWd,Username,Usernumber};
 
+
                 try {
-                    DB connect = new DB();
                     connect.insert("users", 4, PrArr);
+                    c.dispose();
+                    new LoginUi();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-                
-               // new MainUi(Username,Usernumber);
-                c.dispose();
+
+
+                // new MainUi(Username,Usernumber);
+
             }
         });
 
     }
-    public static void main(String args[]){
-         SignUp S = new SignUp();
+    public static void main(String args[]) throws SQLException {
+         new SignUp();
     }
 }

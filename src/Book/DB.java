@@ -62,8 +62,8 @@ public class DB {
         pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, ID);
         ResultSet rs = pstmt.executeQuery();
-        if (rs.next()) {
-            System.out.println(rs.getString(2));
+        while (rs.next()) {
+//            System.out.println(rs.getString(2));
             if (rs.getString(1).equals(ID)) {
                 JOptionPane.showMessageDialog(null, "아이디 중복");
                 return false;
@@ -79,7 +79,7 @@ public class DB {
         pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, Id);
         ResultSet rs = pstmt.executeQuery();
-        if (rs.next()) {
+        while (rs.next()) {
             //System.out.println(rs.getString(2));
             if (rs.getString(2).equals(Pw)) {
                 JOptionPane.showMessageDialog(null, "로그인 성공");

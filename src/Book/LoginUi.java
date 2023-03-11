@@ -29,13 +29,11 @@ public class LoginUi {
                     String UserId = IdTextField.getText();
                     String UserPw = PwTextField.getText();
 
-
                     //MyServer를 어디에 둬야할지 모르겟음 알아보는중
                     DB connect = new DB();
                     boolean state = connect.Login(UserId, UserPw);
 
                     if(state == true){
-                        connect.sever();
                         c.dispose();
                         new MainUi("안민","123123");
 

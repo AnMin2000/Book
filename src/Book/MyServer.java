@@ -6,11 +6,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MyServer {
 
-    public MyServer(){
+    public MyServer() throws SQLException {
+        DB connect = new DB();
         BufferedReader in = null;
         PrintWriter out = null;
 
@@ -33,16 +35,9 @@ public class MyServer {
             out = new PrintWriter(socket.getOutputStream());
 
             while(true) {
-                String inputMessage = in.readLine();	// 수신데이터 한줄씩 읽기
-                if ("quit".equalsIgnoreCase(inputMessage)) break;
+                //여기 안에서 디비를 불러와서 값이 추가 되면 프린트하기 해주기
+                System.out.println("dsfs");
 
-                System.out.println("From Client: " + inputMessage);
-                System.out.print("전송하기>>> ");
-
-                String outputMessage = scanner.nextLine();
-                out.println(outputMessage);
-                out.flush();
-                if ("quit".equalsIgnoreCase(outputMessage)) break;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,7 +52,7 @@ public class MyServer {
             }
         }
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
        new MyServer();
     }
 }
