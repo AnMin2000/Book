@@ -6,11 +6,15 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class MyServer {
-
+    public PreparedStatement pstmt;
+    Connection conn = null;
     public MyServer() throws SQLException {
         DB connect = new DB();
         BufferedReader in = null;
@@ -26,8 +30,9 @@ public class MyServer {
 
             System.out.println("[Server실행] Client.연결대기중...");
             //new MyClient();
+            String tmp = new SignUp().tmp;
+            System.out.println(tmp);
             socket = serverSocket.accept();			// 연결대기
-
 
 
             System.out.println("Client 연결됨.");
@@ -35,8 +40,6 @@ public class MyServer {
             out = new PrintWriter(socket.getOutputStream());
 
             while(true) {
-                //여기 안에서 디비를 불러와서 값이 추가 되면 프린트하기 해주기
-                System.out.println("dsfs");
 
             }
         } catch (IOException e) {

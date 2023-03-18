@@ -3,6 +3,10 @@ package Book;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.Provider;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SignUp {
@@ -18,9 +22,11 @@ public class SignUp {
     private JLabel PassWord;
     private JTextField PassWordTextField;
     String UserID, UserPassWd, Username, Usernumber;
+    public String tmp;
 
     public boolean check;
-
+    PreparedStatement pstmt;
+    Connection conn = null;
     public SignUp() throws SQLException {
         DB connect = new DB();
         connect.sever();
@@ -47,6 +53,7 @@ public class SignUp {
         SignUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 if(check == false) return;
 
                 UserID = IDTextField.getText();
@@ -59,7 +66,8 @@ public class SignUp {
 
                 try {
                     connect.insert("users", 4, PrArr);
-                    c.dispose();
+                    //tmp = connect.ServerPrint(UserID);
+                     c.dispose();
                     new LoginUi();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);

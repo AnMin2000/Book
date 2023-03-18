@@ -57,13 +57,20 @@ public class DB {
 
     }
 
-    public boolean Overlap(String ID) throws SQLException {
+    public ResultSet selectUser(String Id) throws SQLException {
         String sql = "select * from users where id = ?";
         pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, ID);
+        pstmt.setString(1, Id);
         ResultSet rs = pstmt.executeQuery();
+
+        return rs;
+    }
+    public boolean Overlap(String ID) throws SQLException {
+
+        ResultSet rs = selectUser(ID);
+
         while (rs.next()) {
-//            System.out.println(rs.getString(2));
+            System.out.println(rs.getString(2));
             if (rs.getString(1).equals(ID)) {
                 JOptionPane.showMessageDialog(null, "아이디 중복");
                 return false;
@@ -73,12 +80,10 @@ public class DB {
         return true;
     }
 
+
     public boolean Login(String Id, String Pw) throws SQLException {
 
-        String sql = "select * from users where id = ?";
-        pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, Id);
-        ResultSet rs = pstmt.executeQuery();
+        ResultSet rs = selectUser(Id);
         while (rs.next()) {
             //System.out.println(rs.getString(2));
             if (rs.getString(2).equals(Pw)) {
@@ -89,7 +94,16 @@ public class DB {
         JOptionPane.showMessageDialog(null, "로그인 실패");
         return false;
     }
+    public String ServerPrint(String ID) throws SQLException {
+
+        ResultSet rs = selectUser(ID);
+
+        rs.next();
+        return rs.getString(1);
+
+    }
 }
+
 
 
       //  System.out.println(pstmt);
