@@ -1,4 +1,4 @@
-package Book;
+import org.json.simple.JSONObject;
 
 import javax.swing.*;
 import java.sql.*;
@@ -54,6 +54,8 @@ public class DB {
             pstmt.setString(i + 1, PrName[i]);
         // 이건 왜 되는거야? 7열까지 들어가 있으면 8부터 시작을 해야 되는데
         pstmt.executeUpdate();
+        JSONObject data = new JSONObject();
+        data.put("name", PrName);
 
     }
 

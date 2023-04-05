@@ -1,14 +1,8 @@
-package Book;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.lang.foreign.Addressable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Spliterator;
-import java.util.stream.Collectors;
 
 public class MainUi {
 

@@ -1,4 +1,5 @@
-package Book;
+
+import org.json.simple.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,16 +16,14 @@ import java.util.Scanner;
 public class MyServer {
     public PreparedStatement pstmt;
     Connection conn = null;
+    private static final int PORT_NUMBER = 4432;
     public MyServer() throws SQLException {
-        DB connect = new DB();
-        BufferedReader in = null;
-        PrintWriter out = null;
 
         ServerSocket serverSocket = null;
         Socket socket = null;
         Scanner scanner = new Scanner(System.in);
 
-        try {
+        try(ServerSocket server = new ServerSocket(PORT_NUMBER)) {
             serverSocket = new ServerSocket(8000);
 
 
@@ -36,11 +35,14 @@ public class MyServer {
 
 
             System.out.println("Client 연결됨.");
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream());
+
+            JSONObject response = new JSONObject();
 
             while(true) {
 
+                Socket connection = server.accept();
+                Thread task = new SocketThreadServer(connection);
+                task.start();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,6 +58,6 @@ public class MyServer {
         }
     }
     public static void main(String[] args) throws SQLException {
-       new MyServer();
+        new MyServer();
     }
 }

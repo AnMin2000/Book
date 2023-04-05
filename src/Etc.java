@@ -1,5 +1,3 @@
-package Book;
-
 import javax.swing.*;
 
 public class Etc {
