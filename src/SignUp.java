@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -25,7 +26,6 @@ public class SignUp {
     Connection conn = null;
     public SignUp() throws SQLException {
         DB connect = new DB();
-        connect.sever();
         JFrame c = new JFrame();
         c.setSize(400,230);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,8 +68,6 @@ public class SignUp {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-
-
                 // new MainUi(Username,Usernumber);
 
             }

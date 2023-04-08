@@ -24,23 +24,6 @@ public class DB {
         conn = DriverManager.getConnection(dbUrl, dbID, dbPassword);
         // 디비 코드
     }
-    public void sever(){
-        try {
-            BufferedReader in = null;
-            PrintWriter out = null;
-
-            Socket socket = null;
-            Scanner scanner = new Scanner(System.in);
-
-            socket = new Socket("127.0.0.1", 8000);
-
-            System.out.print("연결완료");
-
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public void insert(String name, int number, String[] PrName) throws SQLException {
         String sql;
         String ValuesVar = "?";
@@ -54,9 +37,11 @@ public class DB {
             pstmt.setString(i + 1, PrName[i]);
         // 이건 왜 되는거야? 7열까지 들어가 있으면 8부터 시작을 해야 되는데
         pstmt.executeUpdate();
-        JSONObject data = new JSONObject();
-        data.put("name", PrName);
+      //  JSONObject data = new JSONObject();
+       // data.put("name", PrName);
 
+
+        new Client();
     }
 
     public ResultSet selectUser(String Id) throws SQLException {
@@ -72,7 +57,7 @@ public class DB {
         ResultSet rs = selectUser(ID);
 
         while (rs.next()) {
-            System.out.println(rs.getString(2));
+            //System.out.println(rs.getString(2));
             if (rs.getString(1).equals(ID)) {
                 JOptionPane.showMessageDialog(null, "아이디 중복");
                 return false;

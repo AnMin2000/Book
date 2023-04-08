@@ -1,5 +1,8 @@
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,41 +14,48 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MyServer {
-    public PreparedStatement pstmt;
-    Connection conn = null;
-    private static final int PORT_NUMBER = 4432;
-    public MyServer() throws SQLException {
+    public MyServer(){
+        BufferedReader in = null;
 
         ServerSocket serverSocket = null;
         Socket socket = null;
         Scanner scanner = new Scanner(System.in);
 
-        try(ServerSocket server = new ServerSocket(PORT_NUMBER)) {
+        try {
             serverSocket = new ServerSocket(8000);
 
 
             System.out.println("[Server실행] Client.연결대기중...");
-            //new MyClient();
-            String tmp = new SignUp().tmp;
-            System.out.println(tmp);
+
             socket = serverSocket.accept();			// 연결대기
 
 
             System.out.println("Client 연결됨.");
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            JSONObject response = new JSONObject();
+            while(true){
+                while(in.readLine() != null) {
+                   // JSONObject json = new JSONObject();
+                   // String message = json.toString();
 
-            while(true) {
+                    String inputLine = in.readLine();
+                    System.out.println(inputLine);
+                    JSONParser parser = new JSONParser();
+                    JSONObject jsonObject = (JSONObject) parser.parse(inputLine);
 
-                Socket connection = server.accept();
-                Thread task = new SocketThreadServer(connection);
-                task.start();
+                    Object message = jsonObject.get("message");
+                    System.out.println("받은 메시지: " + message);
+                }
+                socket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         } finally {
             try {
                 scanner.close();		// Scanner 닫기
