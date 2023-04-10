@@ -1,3 +1,5 @@
+import org.json.simple.parser.ParseException;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,6 +68,8 @@ public class SignUp {
                      c.dispose();
                     new LoginUi();
                 } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ParseException ex) {
                     throw new RuntimeException(ex);
                 }
                 // new MainUi(Username,Usernumber);

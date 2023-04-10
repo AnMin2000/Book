@@ -1,4 +1,6 @@
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
 import java.sql.*;
@@ -24,7 +26,7 @@ public class DB {
         conn = DriverManager.getConnection(dbUrl, dbID, dbPassword);
         // 디비 코드
     }
-    public void insert(String name, int number, String[] PrName) throws SQLException {
+    public void insert(String name, int number, String[] PrName) throws SQLException, ParseException {
         String sql;
         String ValuesVar = "?";
 
@@ -40,8 +42,14 @@ public class DB {
       //  JSONObject data = new JSONObject();
        // data.put("name", PrName);
 
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse( "example" );
+        JSONObject jsonObj = (JSONObject) obj;
 
-        new Client();
+        String code = (String) jsonObj.get("example");
+
+        System.out.println(code);
+        new Client(code);
     }
 
     public ResultSet selectUser(String Id) throws SQLException {

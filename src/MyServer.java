@@ -33,7 +33,6 @@ public class MyServer {
 
             socket = serverSocket.accept();			// 연결대기
 
-
             System.out.println("Client 연결됨.");
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 

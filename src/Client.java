@@ -20,7 +20,6 @@ public class Client {
 
 
             JSONObject json = new JSONObject();
-            json.put("message", outputMessage);
             outputMessage = json.toString();
             out.write(outputMessage + "\n");
             out.flush();
