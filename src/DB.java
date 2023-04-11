@@ -35,21 +35,32 @@ public class DB {
         sql = "INSERT INTO " + name + " VALUES (" + ValuesVar + ") ";
 
         pstmt = conn.prepareStatement(sql);
-        for (int i = 0; i < PrName.length; i++)
+
+        
+        for (int i = 0; i < PrName.length; i++) {
             pstmt.setString(i + 1, PrName[i]);
+        }
+        
+
         // 이건 왜 되는거야? 7열까지 들어가 있으면 8부터 시작을 해야 되는데
         pstmt.executeUpdate();
-      //  JSONObject data = new JSONObject();
-       // data.put("name", PrName);
 
-        JSONParser parser = new JSONParser();
-        Object obj = parser.parse( "example" );
-        JSONObject jsonObj = (JSONObject) obj;
+        ResultSet rs = pstmt.executeQuery();
+        String columnValue = null;
+        if (rs.next()) {
+            columnValue = rs.getString("id");
+        }
+        System.out.println(columnValue);
 
-        String code = (String) jsonObj.get("example");
 
-        System.out.println(code);
-        new Client(code);
+
+//        String[] key = new String[]{ "UserID", "UserPassWd", "Username", "Usernumber"};
+//
+//        StringToJson converter = new StringToJson(key, PrName);
+//        String jsonString = converter.convertToJsonString();
+//
+//        System.out.println(jsonString);
+      //  new Client(jsonString);
     }
 
     public ResultSet selectUser(String Id) throws SQLException {
