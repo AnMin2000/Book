@@ -38,23 +38,15 @@ public class MyServer {
 
             while(true){
                 while(in.readLine() != null) {
-                   // JSONObject json = new JSONObject();
-                   // String message = json.toString();
 
                     String inputLine = in.readLine();
                     System.out.println(inputLine);
-                    JSONParser parser = new JSONParser();
-                    JSONObject jsonObject = (JSONObject) parser.parse(inputLine);
-
-                    Object message = jsonObject.get("message");
-                    System.out.println("받은 메시지: " + message);
+                    System.out.println("받은 메시지: " + inputLine);
                 }
                 socket.close();
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
         } finally {
             try {
                 scanner.close();		// Scanner 닫기

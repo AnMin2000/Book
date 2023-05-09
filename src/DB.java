@@ -45,22 +45,23 @@ public class DB {
         // 이건 왜 되는거야? 7열까지 들어가 있으면 8부터 시작을 해야 되는데
         pstmt.executeUpdate();
 
-        ResultSet rs = pstmt.executeQuery();
-        String columnValue = null;
-        if (rs.next()) {
-            columnValue = rs.getString("id");
-        }
-        System.out.println(columnValue);
+//        ResultSet rs = pstmt.executeQuery();
+//        String columnValue = null;
+//        if (rs.next()) {
+//            columnValue = rs.getString("id");
+//        }
+//        System.out.println(columnValue);
 
 
+        String[] key = new String[]{ "UserID", "UserPassWd", "Username", "Usernumber"};
 
-//        String[] key = new String[]{ "UserID", "UserPassWd", "Username", "Usernumber"};
-//
-//        StringToJson converter = new StringToJson(key, PrName);
-//        String jsonString = converter.convertToJsonString();
-//
-//        System.out.println(jsonString);
-      //  new Client(jsonString);
+        StringToJson converter = new StringToJson(key, PrName);
+        String jsonString = converter.convertToJsonString();
+        // 디비에 넣을 때는 그냥 넣고
+        // 디비에서 빼온 String을 Json으로 바꿔서 서버에 던진다.
+        // json으로 바꾼거를 다시 String으로 바꿔서 디비에 넣기(?) // 디비 넣기 전에 String -> json 해야 되나?
+       // new Client()
+        System.out.println(jsonString);
     }
 
     public ResultSet selectUser(String Id) throws SQLException {

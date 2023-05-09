@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 public class SignUp {
     private JButton SignUpButton;
@@ -26,8 +29,18 @@ public class SignUp {
     public boolean check;
     PreparedStatement pstmt;
     Connection conn = null;
-    public SignUp() throws SQLException {
+    PrintWriter out = null;
+    Socket socket = null;
+    public SignUp() throws SQLException, IOException {
+        Scanner scanner = new Scanner(System.in);
+
+        socket = new Socket("127.0.0.1", 8000);
+        out = new PrintWriter(socket.getOutputStream());
+        String outputMessage = scanner.nextLine();
+        //서버
         DB connect = new DB();
+        //디비
+
         JFrame c = new JFrame();
         c.setSize(400,230);
         c.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,7 +48,6 @@ public class SignUp {
         c.add(panel1);
         c.setVisible(true);
 
-        
         Overlap.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,7 +59,7 @@ public class SignUp {
                 }
             }
         });
-        
+
         SignUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -60,25 +72,26 @@ public class SignUp {
                 Usernumber = NumberTextField.getText();
 
                 String[] PrArr = new String[]{UserID,UserPassWd,Username,Usernumber};
+                out.println(PrArr);
+                out.flush();
 
-
-                try {
-                    connect.insert("users", 4, PrArr);
-                    //tmp = connect.ServerPrint(UserID);
-                     c.dispose();
-                    new LoginUi();
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ParseException ex) {
-                    throw new RuntimeException(ex);
-                }
-                // new MainUi(Username,Usernumber);
+//                try {
+//                    connect.insert("users", 4, PrArr);
+//
+//                     c.dispose();
+//                    new LoginUi();
+//                } catch (SQLException ex) {
+//                    throw new RuntimeException(ex);
+//                } catch (ParseException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//
 
             }
         });
 
     }
-    public static void main(String args[]) throws SQLException {
+    public static void main(String args[]) throws SQLException, IOException {
          new SignUp();
     }
 }
